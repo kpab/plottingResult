@@ -28,5 +28,8 @@ def GappingHeatmap(results, walls, fig_name):
     plt.show()
     fig2.savefig(f"{fig_name}_gap.png", dpi=300)
 
+
+
+
 GappingHeatmap(aw06, walls, "aw06")
 
