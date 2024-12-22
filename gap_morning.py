@@ -8,8 +8,25 @@ import numpy as np
 from result_morning import *
 
 type = "result_morning"
-now = aw16
-now_string = "aw16"
+now = aw05
+now_string = "aw05"
+
+def HeatmappingNumber(now_agents_positions, walls, fig_name):    
+    fig2, ax2 = plt.subplots(figsize=(12.0, 8.0),
+                           facecolor="gainsboro")
+    
+    ax2.set_xlim(0, 500)
+    ax2.set_ylim(0, 500)
+
+    ax2.set_title("~ヒートマップ~")
+    ax2 = sns.heatmap(now_agents_positions, cmap='Greens',cbar=False, annot=True, fmt='d', annot_kws={'fontsize':5})
+    for wall in walls:
+            ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
+    ax2.invert_yaxis()
+    # plt.show()
+    fig2.savefig(f"{type}/{fig_name}/heatmap.png", dpi=300)
+    plt.close(fig2)
+
 
 # ヒートマップの差の出力
 def GappingHeatmap(results, walls, fig_name):
@@ -33,7 +50,7 @@ def GappingHeatmap(results, walls, fig_name):
     ax2.invert_yaxis()
     # plt.show()
     fig2.savefig(f"{type}/{fig_name}/gap.png", dpi=300)
-
+    plt.close(fig2)
 
 
 # 箱ひげ図
@@ -138,7 +155,7 @@ def GapHist(now, fig_name):
 
 
 
-
+HeatmappingNumber(now, walls, now_string)
 GappingHeatmap(now, walls, now_string)
 GappingHakohigeHazure(now, now_string)
 GapHist(now, now_string)
