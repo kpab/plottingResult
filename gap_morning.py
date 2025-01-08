@@ -20,7 +20,7 @@ def HeatmappingNumber(now_agents_positions, walls, fig_name):
     ax2.set_ylim(0, 500)
 
     ax2.set_title("~ヒートマップ~")
-    ax2 = sns.heatmap(now_agents_positions, cmap='Greens',cbar=False, annot=True, fmt='d', annot_kws={'fontsize':4})
+    ax2 = sns.heatmap(now_agents_positions, cmap='Greens',cbar=False, annot=True, fmt='d', annot_kws={'fontsize':4.5})
     for wall in walls:
             ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
     ax2.invert_yaxis()
