@@ -8,8 +8,8 @@ import numpy as np
 from result_morning import *
 
 type = "result_morning"
-now = aw13
-now_string = "aw13"
+now = aw16
+now_string = "aw16"
 
 
 def HeatmappingNumber(now_agents_positions, walls, fig_name):    
