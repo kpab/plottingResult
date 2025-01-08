@@ -11,6 +11,7 @@ type = "result_morning"
 now = aw05
 now_string = "aw05"
 
+
 def HeatmappingNumber(now_agents_positions, walls, fig_name):    
     fig2, ax2 = plt.subplots(figsize=(12.0, 8.0),
                            facecolor="gainsboro")
@@ -153,9 +154,17 @@ def GapHist(now, fig_name):
     plt.savefig(f"{type}/{fig_name}/histup.png")
     plt.close()
 
+def CountZero(now):
+    # 一次変換
+    now = sum(now, [])
+    zero_wall = 1611
+    zero_points = len(now) - np.count_nonzero(np.array(now)) - zero_wall
+    print(f"{now_string}のゼロ人数通過地点: {zero_points}")
+
 
 
 HeatmappingNumber(now, walls, now_string)
 GappingHeatmap(now, walls, now_string)
 GappingHakohigeHazure(now, now_string)
 GapHist(now, now_string)
+CountZero(now)
