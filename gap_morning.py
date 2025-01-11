@@ -9,8 +9,11 @@ from walls import addwalls
 from result_morning import *
 
 type = "result_morning"
-now = aww11
-now_string = "aww11"
+
+now_string = "aww20"
+kabe = True
+
+now = xxx[now_string]
 
 
 def HeatmappingNumber(now_agents_positions, walls, fig_name):    
@@ -26,8 +29,8 @@ def HeatmappingNumber(now_agents_positions, walls, fig_name):
             ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
     ax2.invert_yaxis()
 
-    
-    ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
+    if kabe:
+        ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
 
     # plt.show()
     fig2.savefig(f"{type}/{fig_name}/heatmap.png", dpi=300)
@@ -54,8 +57,10 @@ def GappingHeatmap(results, walls, fig_name):
     for wall in walls:
             ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
     ax2.invert_yaxis()
-    ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
-    # plt.show()
+    # -- 壁ある時 --
+    if kabe:
+        ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
+    
     fig2.savefig(f"{type}/{fig_name}/gap.png", dpi=300)
     plt.close(fig2)
 
