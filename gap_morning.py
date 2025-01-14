@@ -10,8 +10,8 @@ from result_morning import *
 
 type = "result_morning"
 
-now_string = "b02"
-kabe = False
+now_string = "wall10"
+kabe = True
 
 now = xxx[now_string]
 
