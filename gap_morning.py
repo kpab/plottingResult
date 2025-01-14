@@ -10,8 +10,8 @@ from result_morning import *
 
 type = "result_morning"
 
-now_string = "wall10"
-kabe = True
+now_string = "normal"
+kabe = False
 
 now = xxx[now_string]
 
@@ -173,9 +173,11 @@ def CountZero(now):
     print(f"{now_string}のゼロ人数通過地点: {zero_points}")
 
 
-
-HeatmappingNumber(now, walls, now_string)
-GappingHeatmap(now, walls, now_string)
-GappingHakohigeHazure(now, now_string)
-GapHist(now, now_string)
-CountZero(now)
+if now_string == "normal":
+    HeatmappingNumber(now, walls, now_string)
+else:
+    HeatmappingNumber(now, walls, now_string)
+    GappingHeatmap(now, walls, now_string)
+    GappingHakohigeHazure(now, now_string)
+    GapHist(now, now_string)
+    CountZero(now)
