@@ -31,12 +31,12 @@ def HeatmappingNumber(now_agents_positions, walls, fig_name):
 
         ax2.set_title(f"ヒートマップ: {key}")
         now = now_agents_positions[key]
-        fmt = 'd'
-        if key in speeds:
-            now = [[float(element) for element in row] for row in now]
-            fmt = '.3f'
 
-        ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=True, fmt=fmt, annot_kws={'fontsize':4.5})
+        if key in speeds:
+            now = [[0.0 if float(element) >= 3.0 else float(element) for element in row] for row in now]
+            ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=True, fmt='.3f', annot_kws={'fontsize':4.5}, vmax=3.00, vmin=1.0)
+        else:
+            ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=True, fmt='d', annot_kws={'fontsize':4.5})
         for wall in walls:
                 ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
         ax2.invert_yaxis()

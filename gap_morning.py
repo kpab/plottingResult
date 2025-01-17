@@ -10,7 +10,7 @@ from result_morning import *
 
 type = "result_morning"
 
-now_string = "normal"
+now_string = "a01"
 kabe = False
 
 now = xxx[now_string]
