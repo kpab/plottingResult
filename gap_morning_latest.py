@@ -19,8 +19,41 @@ now = rrr[s_now_string]
 keys = ["全部", "AtoK", "BtoK", "CtoK", "KtoA", "KtoB", "KtoC", "S_AtoK", "S_BtoK", "S_CtoK", "S_KtoA", "S_KtoB", "S_KtoC"]
 speeds = ["S_AtoK", "S_BtoK", "S_CtoK", "S_KtoA", "S_KtoB", "S_KtoC"]
 
+def get_points_in_rectangles(walls):
 
-def HeatmappingNumber(now_agents_positions, walls, fig_name):    
+    points = set()
+    
+    for wall in walls:
+        # 座標を10で割って整数に変換
+        x1, y1 = wall[0] // 10, wall[1] // 10
+        x2, y2 = wall[2] // 10, wall[3] // 10
+        
+        # x1,y1からx2,y2までの範囲の全座標を生成
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                points.add((x, y))
+    points_list = sorted(list(points))
+
+    return points_list
+
+def create_map_from_points(points_list, now, width=50, height=50, default_value=None):
+    # 入力データを2次元リストとして読み込む
+    original_map = []
+    for line in now:
+        original_map.append([int(val) if isinstance(val, str) else val for val in line])
+    
+    
+    # 座標を0に設定
+    for x, y in points_list:
+        if 0 <= x < width and 0 <= y < height:
+            original_map[y][x] = 0
+            
+    return original_map
+
+
+def HeatmappingNumber(now_agents_positions, walls, fig_name):
+    points_list = get_points_in_rectangles(walls)
+
     for key in keys:
         
         fig2, ax2 = plt.subplots(figsize=(12.0, 8.0),
@@ -32,9 +65,11 @@ def HeatmappingNumber(now_agents_positions, walls, fig_name):
         ax2.set_title(f"ヒートマップ: {key}")
         now = now_agents_positions[key]
 
+        now = create_map_from_points(points_list, now)
+
         if key in speeds:
-            now = [[0.0 if float(element) >= 3.0 else float(element) for element in row] for row in now]
-            ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=True, fmt='.3f', annot_kws={'fontsize':4.5}, vmax=3.00, vmin=1.0)
+            now = [[3.0 if float(element) >= 3.0 else float(element) for element in row] for row in now]
+            ax2 = sns.heatmap(now, cmap='bwr',cbar=False, annot=True, fmt='.3f', annot_kws={'fontsize':4.5}, vmax=3.00, vmin=1.0)
         else:
             ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=True, fmt='d', annot_kws={'fontsize':4.5})
         for wall in walls:
