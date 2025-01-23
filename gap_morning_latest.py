@@ -10,10 +10,12 @@ from result_morning_latest import *
 
 type = "result_morning"
 
-now_string = "aw09"
+now_string = "wall07"
 kabe = True
 
 s_now_string = "s_" + now_string
+
+normalllls = rrr["s_normal"]
 
 now = rrr[s_now_string]
 keys = ["全部", "AtoK", "BtoK", "CtoK", "KtoA", "KtoB", "KtoC", "S_AtoK", "S_BtoK", "S_CtoK", "S_KtoA", "S_KtoB", "S_KtoC"]
@@ -111,6 +113,49 @@ def GappingHeatmap(results, walls, fig_name):
     fig2.savefig(f"{type}/{fig_name}/gap.png", dpi=300)
     plt.close(fig2)
 
+def GappingHeatmapNew(now_agents_positions, walls, fig_name): # 正規化, position分け
+    points_list = get_points_in_rectangles(walls)
+    global normalllls
+
+    for key in keys:
+        
+        fig2, ax2 = plt.subplots(figsize=(12.0, 8.0),
+                            facecolor="gainsboro")
+        
+        ax2.set_xlim(0, 500)
+        ax2.set_ylim(0, 500)
+
+        ax2.set_title(f"ヒートマップ: {key}")
+        nor = normalllls[key]
+        nor = create_map_from_points(points_list, nor)
+        nor = np.array(nor)
+        total_normal = np.sum(nor)
+        nor = nor*100/total_normal
+    
+        now = now_agents_positions[key]
+        now = create_map_from_points(points_list, now)
+        now = np.array(now)
+        total_now = np.sum(now)
+        now = now*100/total_now
+
+        gap = now - nor
+
+        gap_max = np.max(abs(gap))
+
+        if key in speeds:
+            return
+        else:
+            ax2 = sns.heatmap(gap, cmap='bwr',cbar=False, annot=True, fmt='.2f', annot_kws={'fontsize':4.5}, vmax=gap_max, vmin=-1*gap_max)
+        for wall in walls:
+                ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
+        ax2.invert_yaxis()
+
+        if kabe:
+            ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
+
+        # plt.show()
+        fig2.savefig(f"{type}/{fig_name}/heatmap_gap_{key}.png", dpi=300)
+        plt.close(fig2)
 
 # 箱ひげ図
 def GappingHakohigeHazure(results, fig_name):
@@ -148,5 +193,5 @@ def CountZero(now):
 
 
 
-HeatmappingNumber(now, walls, now_string)
-
+# HeatmappingNumber(now, walls, now_string)
+GappingHeatmapNew(now, walls, now_string)
