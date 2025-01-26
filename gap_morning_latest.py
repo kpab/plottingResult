@@ -10,7 +10,7 @@ from result_morning_latest import *
 
 type = "result_morning"
 
-now_string = "wall07"
+now_string = "wall10"
 kabe = True
 
 s_now_string = "s_" + now_string
@@ -71,15 +71,15 @@ def HeatmappingNumber(now_agents_positions, walls, fig_name):
 
         if key in speeds:
             now = [[3.0 if float(element) >= 3.0 else float(element) for element in row] for row in now]
-            ax2 = sns.heatmap(now, cmap='bwr',cbar=False, annot=True, fmt='.3f', annot_kws={'fontsize':4.5}, vmax=3.00, vmin=1.0)
+            ax2 = sns.heatmap(now, cmap='bwr',cbar=False, annot=False, fmt='.3f', annot_kws={'fontsize':4.5}, vmax=3.00, vmin=1.0)
         else:
-            ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=True, fmt='d', annot_kws={'fontsize':4.5})
+            ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=False, fmt='d', annot_kws={'fontsize':4.5})
         for wall in walls:
-                ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
+                ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10, fc='#696969'))
         ax2.invert_yaxis()
 
         if kabe:
-            ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
+            ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10, fc='k'))
 
         # plt.show()
         fig2.savefig(f"{type}/{fig_name}/heatmap_{key}.png", dpi=300)
