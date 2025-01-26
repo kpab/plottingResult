@@ -104,11 +104,11 @@ def GappingHeatmap(results, walls, fig_name):
     ax2.set_title("~ヒートマップの差~")
     ax2 = sns.heatmap(gap, cmap='bwr',cbar=False, annot=True, fmt='d', annot_kws={'fontsize':4.0}, vmax=8000, vmin=-8000)
     for wall in walls:
-            ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
+            ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10, fc='#696969'))
     ax2.invert_yaxis()
     # -- 壁ある時 --
     if kabe:
-        ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
+        ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10, fc='k'))
     
     fig2.savefig(f"{type}/{fig_name}/gap.png", dpi=300)
     plt.close(fig2)
@@ -145,13 +145,13 @@ def GappingHeatmapNew(now_agents_positions, walls, fig_name): # 正規化, posit
         if key in speeds:
             return
         else:
-            ax2 = sns.heatmap(gap, cmap='bwr',cbar=False, annot=True, fmt='.2f', annot_kws={'fontsize':4.5}, vmax=gap_max, vmin=-1*gap_max)
+            ax2 = sns.heatmap(gap, cmap='bwr',cbar=False, annot=False, fmt='.2f', annot_kws={'fontsize':4.5}, vmax=gap_max, vmin=-1*gap_max)
         for wall in walls:
-                ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10))
+                ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10, fc='#696969'))
         ax2.invert_yaxis()
 
         if kabe:
-            ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10))
+            ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10, fc='k'))
 
         # plt.show()
         fig2.savefig(f"{type}/{fig_name}/heatmap_gap_{key}.png", dpi=300)
@@ -194,4 +194,4 @@ def CountZero(now):
 
 
 HeatmappingNumber(now, walls, now_string)
-# GappingHeatmapNew(now, walls, now_string)
+GappingHeatmapNew(now, walls, now_string)
