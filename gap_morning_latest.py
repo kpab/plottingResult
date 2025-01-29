@@ -193,5 +193,5 @@ def CountZero(now):
 
 
 
-HeatmappingNumber(now, walls, now_string)
-# GappingHeatmapNew(now, walls, now_string)
+# HeatmappingNumber(now, walls, now_string)
+GappingHeatmapNew(now, walls, now_string)
