@@ -10,8 +10,8 @@ from result_morning_latest import *
 
 type = "result_morning"
 
-now_string = "wall10"
-kabe = True
+now_string = "normal"
+kabe = False
 
 s_now_string = "s_" + now_string
 
