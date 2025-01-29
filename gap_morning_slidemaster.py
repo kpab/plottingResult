@@ -70,7 +70,7 @@ def HeatmappingNumber(now_agents_positions, walls, fig_name):
     now = btok + ctok
     
 
-    ax2 = sns.heatmap(now, cmap='Greys',cbar=False, annot=False, fmt='d', annot_kws={'fontsize':4.5})
+    ax2 = sns.heatmap(now, cmap='Wistia',cbar=False, annot=False, fmt='d', annot_kws={'fontsize':4.5})
     for wall in walls:
             ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10, fc='#696969'))
     ax2.invert_yaxis()
