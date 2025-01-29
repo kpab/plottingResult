@@ -10,8 +10,8 @@ from result_morning_latest import *
 
 type = "result_morning"
 
-now_string = "normal"
-kabe = False
+now_string = "wall10"
+kabe = True
 
 s_now_string = "s_" + now_string
 
@@ -70,7 +70,7 @@ def HeatmappingNumber(now_agents_positions, walls, fig_name):
     now = btok + ctok
     
 
-    ax2 = sns.heatmap(now, cmap='Greens',cbar=False, annot=False, fmt='d', annot_kws={'fontsize':4.5})
+    ax2 = sns.heatmap(now, cmap='Greys',cbar=False, annot=False, fmt='d', annot_kws={'fontsize':4.5})
     for wall in walls:
             ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10, fc='#696969'))
     ax2.invert_yaxis()
@@ -113,16 +113,16 @@ def GappingHeatmap(results, walls, fig_name):
 def GappingHeatmapNew(now_agents_positions, walls, fig_name): # 正規化, position分け
     points_list = get_points_in_rectangles(walls)
     global normalllls
-
-    for key in keys:
-        
-        fig2, ax2 = plt.subplots(figsize=(12.0, 8.0),
+    fig2, ax2 = plt.subplots(figsize=(12.0, 8.0),
                             facecolor="gainsboro")
         
-        ax2.set_xlim(0, 500)
-        ax2.set_ylim(0, 500)
+    ax2.set_xlim(0, 500)
+    ax2.set_ylim(0, 500)
 
-        ax2.set_title(f"ヒートマップ: {key}")
+    ax2.set_title(f"ヒートマップ: " + "BtoK CtoK Gap")
+
+
+    for key in keys:
         nor = normalllls[key]
         nor = create_map_from_points(points_list, nor)
         nor = np.array(nor)
@@ -139,20 +139,22 @@ def GappingHeatmapNew(now_agents_positions, walls, fig_name): # 正規化, posit
 
         gap_max = np.max(abs(gap))
 
-        if key in speeds:
-            return
-        else:
+        if key=="CtoK" or key=="BtoK":
             ax2 = sns.heatmap(gap, cmap='bwr',cbar=False, annot=False, fmt='.2f', annot_kws={'fontsize':4.5}, vmax=gap_max, vmin=-1*gap_max)
+        else:
+            continue
         for wall in walls:
-                ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10, fc='#696969'))
-        ax2.invert_yaxis()
+            ax2.add_patch(Rectangle((wall[0]/10, wall[1]/10), (wall[2]-wall[0])/10, (wall[3]-wall[1])/10, fc='#696969'))
+            ax2.invert_yaxis()
 
         if kabe:
             ax2.add_patch(Rectangle((addwalls[now_string][0]/10, addwalls[now_string][1]/10), (addwalls[now_string][2]-addwalls[now_string][0])/10, (addwalls[now_string][3]-addwalls[now_string][1])/10, fc='k'))
+       
+    
 
-        # plt.show()
-        fig2.savefig(f"{type}/{fig_name}/heatmap_gap_{key}.png", dpi=300)
-        plt.close(fig2)
+    # plt.show()
+    fig2.savefig(f"{type}/{fig_name}/heatmap_gap_btokctok.png", dpi=300)
+    plt.close(fig2)
 
 # 箱ひげ図
 def GappingHakohigeHazure(results, fig_name):
